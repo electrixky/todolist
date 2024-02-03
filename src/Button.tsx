@@ -1,9 +1,9 @@
 import React from 'react';
 
 type ButtonPropsType = {
-    text: string
+    title: string
 }
 
 export const Button = (props: ButtonPropsType) => {
-    return <button>{props.text}</button>
+    return <button>{props.title}</button>
 };
