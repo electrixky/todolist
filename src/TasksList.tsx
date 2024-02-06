@@ -5,13 +5,14 @@ import React from "react";
 
 type TasksListPropsType = {
     tasks: Array<TaskType>
+    removeTask: (id: number) => void
 }
 
-export function TasksList({tasks}: TasksListPropsType) {
+export function TasksList({tasks, removeTask}: TasksListPropsType) {
     const tasksList = <ul>
         {
             tasks.map(task=> {
-                return <Task key={task.id} title={task.title} isDone={task.isDone}/>
+                return <Task removeTask={removeTask} taskId={task.id} key={task.id} title={task.title} isDone={task.isDone}/>
             })
         }
     </ul>

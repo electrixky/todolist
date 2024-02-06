@@ -3,12 +3,15 @@ import React from "react";
 export type TaskPropsType = {
     title: string
     isDone: boolean
+    taskId: number
+    removeTask: (id: number) => void
 }
 
-export function Task({title, isDone}: TaskPropsType) {
+export function Task({taskId, title, isDone, removeTask}: TaskPropsType) {
     return (
-        <li>
+        <li key={taskId}>
             <input type="checkbox" checked={isDone}/> <span>{title}</span>
+            <button onClick={() => removeTask(taskId)}>✖️</button>
         </li>
     )
 }
