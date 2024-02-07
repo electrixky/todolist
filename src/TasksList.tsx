@@ -1,4 +1,4 @@
-import {TaskType} from "./App";
+import {FilterValuesType, TaskType} from "./App";
 import {Task} from "./Task";
 import {Button} from "./Button";
 import React from "react";
@@ -6,13 +6,22 @@ import React from "react";
 type TasksListPropsType = {
     tasks: Array<TaskType>
     removeTask: (id: number) => void
+    changeFilter: (value: FilterValuesType) => void
 }
 
-export function TasksList({tasks, removeTask}: TasksListPropsType) {
+export function TasksList({tasks, removeTask, changeFilter}: TasksListPropsType) {
     const tasksList = <ul>
         {
-            tasks.map(task=> {
-                return <Task removeTask={removeTask} taskId={task.id} key={task.id} title={task.title} isDone={task.isDone}/>
+            tasks.map(task => {
+                return (
+                    <li key={task.id}>
+                        <Task
+                        taskId={task.id}
+                        removeTask={removeTask}
+                        title={task.title}
+                        isDone={task.isDone}/>
+                    </li>
+                )
             })
         }
     </ul>
@@ -20,9 +29,9 @@ export function TasksList({tasks, removeTask}: TasksListPropsType) {
         <>
             {tasksList}
             <div>
-                <Button title={"All"}/>
-                <Button title={"Active"}/>
-                <Button title={"Completed"}/>
+                <Button onClickHandler={() => changeFilter("All")} title={"All"}/>
+                <Button onClickHandler={() => changeFilter("Active")} title={"Active"}/>
+                <Button onClickHandler={() => changeFilter("Completed")} title={"Completed"}/>
             </div>
         </>
     )
