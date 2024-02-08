@@ -5,11 +5,15 @@ import React from "react";
 
 type TasksListPropsType = {
     tasks: Array<TaskType>
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
     changeFilter: (value: FilterValuesType) => void
 }
 
 export function TasksList({tasks, removeTask, changeFilter}: TasksListPropsType) {
+    const changeFilterHandlerCreator = (filter: FilterValuesType) => {
+        return () => changeFilter(filter)
+    }
+
     const tasksList = <ul>
         {
             tasks.map(task => {
@@ -29,9 +33,9 @@ export function TasksList({tasks, removeTask, changeFilter}: TasksListPropsType)
         <>
             {tasksList}
             <div>
-                <Button onClickHandler={() => changeFilter("All")} title={"All"}/>
-                <Button onClickHandler={() => changeFilter("Active")} title={"Active"}/>
-                <Button onClickHandler={() => changeFilter("Completed")} title={"Completed"}/>
+                <Button onClickHandler={changeFilterHandlerCreator("All")} title={"All"}/>
+                <Button onClickHandler={changeFilterHandlerCreator("Active")} title={"Active"}/>
+                <Button onClickHandler={changeFilterHandlerCreator("Completed")} title={"Completed"}/>
             </div>
         </>
     )
