@@ -39,11 +39,28 @@ function App() {
 
     //UI
 
-    const tasksForTodoList: Array<TaskType> = filter === "Active"
-    ? tasks.filter(task => !task.isDone)
-        : filter === "Completed"
-            ? tasks.filter(task => task.isDone)
-            : tasks
+    // const tasksForTodoList: Array<TaskType> = filter === "Active"
+    // ? tasks.filter(task => !task.isDone)
+    //     : filter === "Completed"
+    //         ? tasks.filter(task => task.isDone)
+    //         : tasks
+
+    const getFilteredTasks = (allTasks: Array<TaskType>, filterValue: FilterValuesType) => {
+        let result
+        switch (filterValue) {
+            case "Active":
+                result = tasks.filter(task => !task.isDone)
+                break
+            case "Completed":
+                result = tasks.filter(task => task.isDone)
+                break
+            default:
+                result = tasks
+        }
+        return result
+    }
+
+    const tasksForTodoList: Array<TaskType> = getFilteredTasks(tasks, filter)
 
     function changeFilter(value: FilterValuesType) {
         setFilter(value)
