@@ -46,18 +46,14 @@ function App() {
     //         : tasks
 
     const getFilteredTasks = (allTasks: Array<TaskType>, filterValue: FilterValuesType) => {
-        let result
         switch (filterValue) {
             case "Active":
-                result = tasks.filter(task => !task.isDone)
-                break
+                return tasks.filter(task => !task.isDone)
             case "Completed":
-                result = tasks.filter(task => task.isDone)
-                break
+                return tasks.filter(task => task.isDone)
             default:
-                result = tasks
+                return tasks
         }
-        return result
     }
 
     const tasksForTodoList: Array<TaskType> = getFilteredTasks(tasks, filter)
