@@ -1,8 +1,32 @@
 .App {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .App > div {
-  margin-right: 50px;
+    margin-right: 50px;
+}
+
+.taskTitleInputError {
+    border: 2px solid red;
+    outline: none;
+}
+
+.task {
+    font-weight: bold;
+}
+
+.task-done {
+    opacity: 0.5;
+}
+
+.filter-btn-active {
+    background-color: #19986b;
+    color: #fff
+}
+
+.tasks-counter {
+    font-weight: normal;
+    font-size: small;
+
 }

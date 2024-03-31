@@ -5,20 +5,24 @@ import React, {useState} from "react";
 import {FilterValuesType, TaskType} from "./App";
 
 type TodoListPropsType = {
+    todolistID: string
     todoListTitle: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
-    changeFilter: (value: FilterValuesType) => void
-    addTask: (title: string) => void
+    removeTask: (todolistID: string, taskId: string) => void
+    changeFilter: (todolistID: string, value: FilterValuesType) => void
+    addTask: (todolistID: string, title: string) => void
+    changeTaskStatus: (todolistID: string, id: string, newIsDone: boolean) => void
+    filter: FilterValuesType
+    removeTodolist: (todolistId: string) => void
 }
-export function TodoList({todoListTitle,tasks, removeTask, changeFilter, addTask}: TodoListPropsType) {
 
+export function TodoList({todolistID, todoListTitle, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter, removeTodolist}: TodoListPropsType) {
 
     return (
         <div>
-            <TodoListHeader title={todoListTitle}/>
-            <AddTaskForm addTask={addTask}/>
-            <TasksList removeTask={removeTask} tasks={tasks} changeFilter={changeFilter}/>
+            <TodoListHeader todolistID={todolistID} title={todoListTitle} removeTodolist={removeTodolist}/>
+            <AddTaskForm todolistID={todolistID} addTask={addTask}/>
+            <TasksList todolistID={todolistID} removeTask={removeTask} tasks={tasks} changeFilter={changeFilter} changeTaskStatus={changeTaskStatus} filter={filter}/>
         </div>
     )
 }

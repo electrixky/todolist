@@ -4,38 +4,51 @@ import {Button} from "./Button";
 import React from "react";
 
 type TasksListPropsType = {
+    todolistID: string
     tasks: Array<TaskType>
-    removeTask: (id: string) => void
-    changeFilter: (value: FilterValuesType) => void
+    removeTask: (todolistID: string, taskId: string) => void
+    changeFilter: (todolistID: string, value: FilterValuesType) => void
+    changeTaskStatus: (todolistID: string, id: string, newIsDone: boolean) => void
+    filter: FilterValuesType
 }
 
-export function TasksList({tasks, removeTask, changeFilter}: TasksListPropsType) {
+export function TasksList({todolistID, tasks, removeTask, changeFilter, changeTaskStatus, filter}: TasksListPropsType) {
     const changeFilterHandlerCreator = (filter: FilterValuesType) => {
-        return () => changeFilter(filter)
+        return () => changeFilter(todolistID, filter)
     }
 
     const tasksList = <ul>
         {
-            tasks.map(task => {
-                return (
-                    <li key={task.id}>
-                        <Task
-                        taskId={task.id}
-                        removeTask={removeTask}
-                        title={task.title}
-                        isDone={task.isDone}/>
-                    </li>
-                )
-            })
+            tasks.length === 0
+                ? <p>No tasks</p>
+                : tasks.map(t => {
+                    return (
+                        <li key={t.id}>
+                            <Task
+                                todolistID={todolistID}
+                                taskId={t.id}
+                                removeTask={removeTask}
+                                title={t.title}
+                                isDone={t.isDone}
+                                changeTaskStatus={changeTaskStatus}/>
+                        </li>
+                    )
+                })
         }
     </ul>
     return (
         <>
             {tasksList}
             <div>
-                <Button onClickHandler={changeFilterHandlerCreator("All")} title={"All"}/>
-                <Button onClickHandler={changeFilterHandlerCreator("Active")} title={"Active"}/>
-                <Button onClickHandler={changeFilterHandlerCreator("Completed")} title={"Completed"}/>
+                <Button className={filter === "All" ? "filter-btn-active" : undefined}
+                        onClickHandler={changeFilterHandlerCreator("All")}
+                        title={"All"}/>
+                <Button className={filter === "Active" ? "filter-btn-active" : undefined}
+                        onClickHandler={changeFilterHandlerCreator("Active")}
+                        title={"Active"}/>
+                <Button className={filter === "Completed" ? "filter-btn-active" : undefined}
+                        onClickHandler={changeFilterHandlerCreator("Completed")}
+                        title={"Completed"}/>
             </div>
         </>
     )
