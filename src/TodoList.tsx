@@ -14,15 +14,31 @@ type TodoListPropsType = {
     changeTaskStatus: (todolistID: string, id: string, newIsDone: boolean) => void
     filter: FilterValuesType
     removeTodolist: (todolistId: string) => void
+    updateTask: (todolistID: string, taskID: string, title: string) => void
+    updateTodolist: (todolistID: string, title: string) => void
 }
 
-export function TodoList({todolistID, todoListTitle, tasks, removeTask, changeFilter, addTask, changeTaskStatus, filter, removeTodolist}: TodoListPropsType) {
+export function TodoList({
+                             todolistID,
+                             todoListTitle,
+                             tasks,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             changeTaskStatus,
+                             filter,
+                             removeTodolist,
+                             updateTask,
+                             updateTodolist
+                         }: TodoListPropsType) {
 
     return (
         <div>
-            <TodoListHeader todolistID={todolistID} title={todoListTitle} removeTodolist={removeTodolist}/>
+            <TodoListHeader todolistID={todolistID} title={todoListTitle} removeTodolist={removeTodolist}
+                            updateTodolist={updateTodolist}/>
             <AddTaskForm todolistID={todolistID} addTask={addTask}/>
-            <TasksList todolistID={todolistID} removeTask={removeTask} tasks={tasks} changeFilter={changeFilter} changeTaskStatus={changeTaskStatus} filter={filter}/>
+            <TasksList todolistID={todolistID} removeTask={removeTask} tasks={tasks} changeFilter={changeFilter}
+                       changeTaskStatus={changeTaskStatus} filter={filter} updateTask={updateTask}/>
         </div>
     )
 }

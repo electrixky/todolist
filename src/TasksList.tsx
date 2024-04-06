@@ -10,9 +10,18 @@ type TasksListPropsType = {
     changeFilter: (todolistID: string, value: FilterValuesType) => void
     changeTaskStatus: (todolistID: string, id: string, newIsDone: boolean) => void
     filter: FilterValuesType
+    updateTask: (todolistID: string, taskID: string, title: string) => void
 }
 
-export function TasksList({todolistID, tasks, removeTask, changeFilter, changeTaskStatus, filter}: TasksListPropsType) {
+export function TasksList({
+                              todolistID,
+                              tasks,
+                              removeTask,
+                              changeFilter,
+                              changeTaskStatus,
+                              filter,
+                              updateTask
+                          }: TasksListPropsType) {
     const changeFilterHandlerCreator = (filter: FilterValuesType) => {
         return () => changeFilter(todolistID, filter)
     }
@@ -22,6 +31,10 @@ export function TasksList({todolistID, tasks, removeTask, changeFilter, changeTa
             tasks.length === 0
                 ? <p>No tasks</p>
                 : tasks.map(t => {
+                    const changeTaskTitleHandler = (title: string) => {
+                        updateTask(todolistID, t.id, title)
+                    }
+
                     return (
                         <li key={t.id}>
                             <Task
@@ -30,7 +43,9 @@ export function TasksList({todolistID, tasks, removeTask, changeFilter, changeTa
                                 removeTask={removeTask}
                                 title={t.title}
                                 isDone={t.isDone}
-                                changeTaskStatus={changeTaskStatus}/>
+                                changeTaskStatus={changeTaskStatus}
+                                changeTaskTitle={changeTaskTitleHandler}
+                            />
                         </li>
                     )
                 })
